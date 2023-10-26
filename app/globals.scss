@@ -1,0 +1,57 @@
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+@layer components {
+  .box {
+    @apply border border-primary;
+  }
+
+  .chat-window--parent {
+
+  }
+
+  .chat-wrapper {
+    height: 0px;
+  }
+
+  .toolbar-bottom {
+
+  }
+}
+
+
+.game-page {
+  @apply border border-primary;
+}
+
+.window-container {
+  @apply border border-secondary p-4;
+}
+
+.chat-window {
+  @apply border border-accent p-2 bg-neutral;
+
+}
+
+.message-area {
+  @apply border border-success p-2;
+}
+
+.message-container {
+  @apply border border-primary p-2;
+}
+
+.tool-container {
+  @apply border border-secondary p-4 pt-0;
+}
