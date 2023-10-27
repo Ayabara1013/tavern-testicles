@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en" data-theme="dark" >
       <body className={`${inter.className} flex flex-col h-screen max-h-screen border border-white`}>
         <Navbar />
-        <div className="app-wrapper flex-1">{children}</div>
+        <div className="app-wrapper">{children}</div>
       </body>
     </html>
   )
