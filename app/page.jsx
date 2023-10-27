@@ -31,22 +31,21 @@ const Game = (props) => {
     elements.push(<li>text {i}</li>);
   }
 
+  const chatColumns = 2;
+  const rollColumns = Math.floor(chatColumns / 2) || 1;
+  const numChatColumns = 2;
+  const totalColumns = chatColumns * numChatColumns + rollColumns;
+
   return (
     <div className='game-page'>
-      <div className='chat-row p-4 gap-2'>
-        {/* <div className="chat-col` w-full `p-2">
-          <div className='chat-window flex flex-col h-full w-100'>
-            <div className='message-area flex flex-col flex-auto h-full overflow-y-hidden'>
-              <div className='message-container flex-auto overflow-y-scroll'>{elements}</div>
-            </div>
-            <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
-          </div>
-        </div> */}
+      <div className={`chat-row grid grid-cols-${totalColumns} p-4 gap-4 gridcols`}>
 
-        <ChatWindow />
-        <ChatWindow />
-        <ChatWindow />
-
+        <RollsWindow cols={1} className={``} />
+        {
+          [...Array(numChatColumns)].map((_, i) => (
+            <ChatWindow cols={chatColumns} key={i} className={``} />
+          ))
+        }
         
       </div>
         
@@ -57,6 +56,8 @@ const Game = (props) => {
   )
 }
 
+// OH FUCK WOULD FLEX HAVE BEEN BETTER??! WITH FLEX, I CAN MAKE THE COLUMNS SUPER TINY FOR A GROW-IN-GROW-OUT EFFECT!!!! FUCK MEEE!!!!!
+
 const Discover = () => {
   return (
     <div className='border border-dotted'>
@@ -65,6 +66,23 @@ const Discover = () => {
     </div>
   )
 }
+
+{/* <div className="chat-col` w-full `p-2">
+  <div className='chat-window flex flex-col h-full w-100'>
+    <div className='message-area flex flex-col flex-auto h-full overflow-y-hidden'>
+      <div className='message-container flex-auto overflow-y-scroll'>{elements}</div>
+    </div>
+    <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
+  </div>
+</div> */}
+
+{/* <div className='col-span-1 h-full border border-accent p-2'></div>
+<div className='col-span-2 h-full border border-accent p-2'></div>
+<div className='col-span-2 h-full border border-accent p-2'></div> */}
+
+{/* <div className='flex-grow-[1] h-full border border-accent p-2'></div>
+<div className='flex-grow-[2] h-full border border-accent p-2'></div>
+<div className='flex-grow-[2] h-full border border-accent p-2'></div> */}
 
 const GameInfo = () => {
   return (
@@ -85,7 +103,7 @@ const GameCreate = () => {
 }
 
 function ChatWindow(props) {
-  const { num = 50 } = props;
+  const { num = 50, cols, className } = props;
   let elements = [];
 
   for (let i = 0; i < num; i++) {
@@ -93,44 +111,54 @@ function ChatWindow(props) {
   }
 
   return (
-    <div className='chat-window flex flex-col h-full  w-full '>
+    <div className={`chat-window flex flex-col gap-2 h-full col-span-${cols} min-h-0`}>
       <div className='message-area flex flex-col flex-auto h-full overflow-y-hidden'>
-        <div className='message-container flex-auto overflow-y-scroll'>{elements}</div>
+        <div className='message-container flex-auto overflow-y-scroll'>
+          <BunchOfElements />
+          <BunchOfElements />
+        </div>
       </div>
+      {/* NOTE!!! using the message area wrapper outside the container stops the input from being squished */}
 
       <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
     </div>
   )
 }
 
-// const Chatbox = (props) => {
-//   return (
-//     <div className='border-2 border-secondary p-2 '>
-//       {props.children}
-//     </div>
-//   )
-// }
 
-// const Messagebox = (props) => {
-//   const { num = 50 } = props;
 
-//   let elements = [];
+/**
+ * 
+ * @param {*} props num (chat elements), cols to span, className
+ * @returns 
+ */
+function RollsWindow(props) {
+  const { num = 50, cols, className } = props;
+  let elements = [];
 
-//   for (let i = 0; i < num; i++) {
-//     elements.push(<div>text {i}</div>);
-//   }
+  const RollElement = (num) => {
+    return (
+      <div key={num}
+        className='bg-primary m-2 p-2 min-w-fit w-16 text-center text-primary-content font-bold rounded-xl '>
+        {Math.floor(Math.random() * 6) + 1}
+      </div>
+    )
+  }
 
-//   return (
-//     <div className='border-2 border-primary mb-2 p-2 h-full align-self-auto'>
-//       {elements}
-//     </div>
-//   )
-// }
+  for (let i = 0; i < num; i++) {
+    elements.push(<RollElement num={i} />);
+  }
 
-// const Inputbox = (props) => {
-//   return (
-//     <div className='border-2 border-primary p-2'>
-//       {props.children}
-//     </div>
-//   )
-// }
+  return (
+    <div className={`chat-window flex flex-col gap-2 h-full col-span-${cols} min-h-0`}>
+      <div className='message-area flex flex-col flex-auto h-full overflow-y-hidden'>
+        <div className='message-container flex-auto overflow-y-scroll'>
+          {elements}
+        </div>
+      </div>
+      {/* NOTE!!! using the message area wrapper outside the container stops the input from being squished */}
+
+      <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
+    </div>
+  )
+}

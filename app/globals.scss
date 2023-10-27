@@ -35,18 +35,18 @@
 
 
 .game-page {
-  @apply border border-primary;
+  // @apply border border-primary;
   height: 100%;
 }
 
 .chat-row {
-  @apply border border-secondary;
-  display: flex;
+  // @apply border border-secondary;
+  // display: flex;
   height: 80%;
 }
 
 .chat-col {
-  @apply border border-secondary;
+  // @apply border border-secondary;
 
   // display: block !important;
   flex: 1 0 0%;
@@ -57,19 +57,20 @@
 }
 
 .chat-window {
-  @apply border border-accent p-2 bg-neutral;
+  // @apply border border-accent p-2 bg-neutral;
+  @apply p-2 bg-neutral rounded-xl ;
 
 }
 
 .message-area {
-  @apply border border-success p-2;
+  // @apply border border-success p-2;
 }
 
 .message-container {
-  @apply border border-primary p-2;
+  // @apply border border-primary p-2;
 }
 
 .tool-container {
-  @apply border border-secondary p-4 pt-0;
+  // @apply border border-secondary p-4 pt-0;
   height: 20%;
 }
