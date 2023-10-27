@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '@/components/daisyui/breadcrumbs'
-import { BunchOfElements } from '@/components/game/ChatWindow'
-import { RollWindow } from '@/components/game/RollWindow'
+import { BunchOfElements, ChatWindow } from '@/components/gameComponents/ChatWindow'
+import { RollWindow } from '@/components/gameComponents/RollWindow'
 
 export default function Home() {
   return (
@@ -10,15 +10,11 @@ export default function Home() {
   )
 }
 
-
-
 const HomeScreen = () => {
   return (
     <div className='border border-dotted'>
       <p className='text-5xl font-semibold text-center m-4'>home</p>
       <Breadcrumbs />
-
-
     </div>
   )
 }
@@ -31,26 +27,26 @@ const Game = (props) => {
     elements.push(<li>text {i}</li>);
   }
 
-  const chatColumns = 2;
-  const rollColumns = Math.floor(chatColumns / 2) || 1;
+  const colsForChat = 2;
+  const rollColumns = Math.floor(colsForChat / 2) || 1;
   const numChatColumns = 2;
-  const totalColumns = chatColumns * numChatColumns + rollColumns;
+  const totalColumns = colsForChat * numChatColumns + rollColumns;
 
   return (
     <div className='game-page'>
-      <div className={`chat-row grid grid-cols-${totalColumns} p-4 gap-4 gridcols`}>
-
+      <div className={`chat-row grid grid-cols-5 p-4 gap-4`}> { /** ${total columns should go in there, but it seems to be broken?}*/ }
         <RollsWindow cols={1} className={``} />
         {
           [...Array(numChatColumns)].map((_, i) => (
-            <ChatWindow cols={chatColumns} key={i} className={``} />
+            <ChatWindow cols={colsForChat} key={i} className={``} />
           ))
-        }
-        
+        } 
       </div>
         
-      <div className='tool-container h-1/4'>
-        <div className='bg-neutral h-full'>toolbox</div>
+      <div className='tool-row h-1/4'>
+        <div className='tool-container bg-neutral h-full rounded-xl'>
+          
+        </div>
       </div>
     </div>
   )
@@ -102,28 +98,30 @@ const GameCreate = () => {
   )
 }
 
-function ChatWindow(props) {
-  const { num = 50, cols, className } = props;
-  let elements = [];
+// function ChatWindow(props) {
+//   const { num = 50, cols, className } = props;
+//   let elements = [];
 
-  for (let i = 0; i < num; i++) {
-    elements.push(<li>text {i}</li>);
-  }
+//   for (let i = 0; i < num; i++) {
+//     elements.push(<li>text {i}</li>);
+//   }
 
-  return (
-    <div className={`chat-window flex flex-col gap-2 h-full col-span-${cols} min-h-0`}>
-      <div className='message-area flex flex-col flex-auto h-full overflow-y-hidden'>
-        <div className='message-container flex-auto overflow-y-scroll'>
-          <BunchOfElements />
-          <BunchOfElements />
-        </div>
-      </div>
-      {/* NOTE!!! using the message area wrapper outside the container stops the input from being squished */}
+//   return (
+//     <div className={`chat-window flex flex-col gap-2 h-full col-span-${cols} min-h-0`}>
+//       <div className='chat-window__header'>name</div>
 
-      <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
-    </div>
-  )
-}
+//       <div className='message-area flex flex-col flex-auto h-full overflow-y-hidden'>
+//         <div className='message-container flex-auto overflow-y-scroll'>
+//           <BunchOfElements />
+//           <BunchOfElements />
+//         </div>
+//       </div>
+//       {/* NOTE!!! using the message area wrapper outside the container stops the input from being squished */}
+
+//       <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
+//     </div>
+//   )
+// }
 
 
 
@@ -137,10 +135,35 @@ function RollsWindow(props) {
   let elements = [];
 
   const RollElement = (num) => {
+    let bg = '';
+    let roll = Math.floor(Math.random() * 6) + 1;
+
+    switch (roll) {
+      case 2:
+        bg = 'bg-secondary';
+        break;
+      case 3:
+        bg = 'bg-accent';
+        break;
+      case 4:
+        bg = 'bg-info';
+        break;
+      case 5:
+        bg = 'bg-success';
+        break;
+      case 6:
+        bg = 'bg-error';
+        break;
+      default:
+        bg = 'bg-primary';
+        break;
+    }
+    
+
     return (
       <div key={num}
-        className='bg-primary m-2 p-2 min-w-fit w-16 text-center text-primary-content font-bold rounded-xl '>
-        {Math.floor(Math.random() * 6) + 1}
+        className={`${bg} m-2 p-2 min-w-fit w-16 text-center text-primary-content font-bold rounded-xl`}>
+        {roll}
       </div>
     )
   }
@@ -158,7 +181,16 @@ function RollsWindow(props) {
       </div>
       {/* NOTE!!! using the message area wrapper outside the container stops the input from being squished */}
 
-      <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" />
+      <div className='flex flex-wrap m-auto gap-2 text-primary-content font-medium'>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲4</div>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲6</div>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲8</div>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲10</div>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲12</div>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲20</div>
+        <div className='px-3 py-2 bg-primary w-fit rounded-xl'>🎲100</div>
+      </div>
+      {/* <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full" /> */}
     </div>
   )
 }

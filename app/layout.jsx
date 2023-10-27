@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.scss'
+import { Navbar } from '@/components/Navbar/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="dark" >
-      <body className={`${inter.className} flex flex-col h-screen max-h-screen border border-white`}>
+      <body className={`${inter.className} flex flex-col h-screen max-h-screen `}>
         <Navbar />
         <div className="app-wrapper">{children}</div>
       </body>
@@ -20,10 +21,11 @@ export default function RootLayout({ children }) {
 }
 
 
-const Navbar = () => {
-  return (
-    <div className="navbar bg-base-200">
-      <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
-    </div>
-  )
-}
+// const Navbar = () => {
+//   return (
+//     <div className="navbar bg-base-200">
+//       <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+//     </div>
+//   )
+// }
+
