@@ -46,20 +46,9 @@ function ChatInput() {
     }
   }, [value])
 
-  function PromptPopup() {
-    return (
-      <div className={`prompt-popup ${showPrompt ? '' : 'hidden'} p-2 min-w-1/2 rounded-lg drop-shadow-md `}>
-        <div className='prompt__option'>/hello-world</div>
-        <div className={`prompt__option --selected`}>/foo-bar</div>
-        <div className='prompt__option'>@dave</div>
-        <div className='prompt__option'>/roll 2d6</div>
-      </div>
-    )
-  }
-
   return (
     <div className='relative'>
-      <PromptPopup />
+      <PromptPopup showPrompt={showPrompt} value={value} />
 
       <input
         type="text"
@@ -72,6 +61,26 @@ function ChatInput() {
   )
 }
 
+function PromptPopup(props) {
+  const { showPrompt, value } = props;
+  const [options, setOptions] = useState(['stuff']);
+
+  useEffect(() => {
+    const store = ['callout', 'roll', 'stuff', 'john', 'steve', 'dave'];
+    const filteredOptions = store.filter(item => item.includes(value));
+    setOptions(filteredOptions);
+  }, [value]); 
+
+
+  return (
+    <div className={`prompt-popup ${showPrompt ? '' : 'hidden'} p-2 min-w-1/2 rounded-lg drop-shadow-md `}>
+      <div>
+        {options}
+      </div>
+    </div>
+  );
+}
+
 
 
 
@@ -79,6 +88,7 @@ function ChatInput() {
 
 const createExampleChatComponents = (num) => {
   let elements = [];
+  
 
   for (let i = 0; i < num; i++) {
 
